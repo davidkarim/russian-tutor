@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Russian Tutor – 7-day course</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1d2433;--muted:#667085;--accent:#3b5bdb;--accent-ink:#fff;--soft:#e8edff;--good:#2f9e44;--good-bg:#e6f6ea;--warn:#e67700;--warn-bg:#fff1dc;--bad:#c92a2a;--bad-bg:#fdeaea;--line:#e7e3da;--shadow:0 2px 10px rgba(30,40,70,.08)}
+@media (prefers-color-scheme:dark){:root{--bg:#14171f;--card:#1e222d;--ink:#eef0f6;--muted:#9aa3b5;--accent:#7c93ff;--accent-ink:#0d1020;--soft:#262c44;--good:#69db7c;--good-bg:#1c3324;--warn:#ffc078;--warn-bg:#3a2d17;--bad:#ff8787;--bad-bg:#3b1f22;--line:#2b303d;--shadow:none}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+#top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:calc(8px + env(safe-area-inset-top)) 14px 8px}
+#top .in{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:8px}
+#top .brand{font-weight:750;font-size:18px;flex:1;white-space:nowrap}
+#top .brand small{color:var(--muted);font-weight:500;font-size:13px;margin-left:6px}
+.navbtn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 12px;font-size:15px;font-weight:600;min-height:44px;cursor:pointer}
+.navbtn.on{background:var(--soft);border-color:var(--accent);color:var(--accent)}
+main{max-width:680px;margin:0 auto;padding:14px 14px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:0 0 14px;box-shadow:var(--shadow)}
+h1{font-size:24px;margin:4px 0 6px}h2{font-size:20px;margin:0 0 6px}h3{font-size:16px;margin:0 0 6px}
+p{margin:6px 0}.muted{color:var(--muted)}.small{font-size:14px}.center{text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:12px 20px;border-radius:16px;border:2px solid var(--line);background:var(--card);color:var(--ink);font-size:18px;font-weight:650;cursor:pointer;font-family:inherit;text-align:center}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.soft{background:var(--soft);border-color:var(--soft);color:var(--accent)}
+.btn.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.btn.warn{background:var(--warn-bg);border-color:var(--warn);color:var(--warn)}
+.btn.sm{min-height:44px;padding:8px 14px;font-size:15px;border-radius:12px}
+.btn.block{display:flex;width:100%}
+.btn[disabled]{opacity:.55;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.row>.btn{flex:1 1 140px}
+.playrow{display:flex;gap:10px;margin:14px 0 6px}
+.playrow .big{flex:2;min-height:72px;font-size:22px}.playrow .slow{flex:1;min-height:72px;font-size:18px}
+.cyr{font-weight:600;line-height:1.15;text-align:center;margin:6px 0;word-break:break-word}
+.cyr.letter{font-size:clamp(76px,24vw,132px)}.cyr.word{font-size:clamp(44px,13vw,72px)}.cyr.phrase{font-size:clamp(34px,10vw,56px)}
+.tr{text-align:center;font-size:clamp(22px,6vw,30px);font-weight:700;color:var(--accent)}
+.mean{text-align:center;font-size:19px;color:var(--ink)}
+.hint{text-align:center;color:var(--muted);font-size:16px}
+.tip{background:var(--soft);border-radius:14px;padding:10px 14px;margin:12px 0;font-size:16px}
+.ex{border:1px dashed var(--line);border-radius:16px;padding:10px 14px;margin:12px 0;text-align:center}
+.ex .c{font-size:30px;font-weight:600}
+.badge{display:inline-block;font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--accent);margin-bottom:6px}
+.badge.circle{background:var(--warn-bg);color:var(--warn)}.badge.new{background:var(--good-bg);color:var(--good)}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:0 0 14px}.bar>i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.opt{min-height:88px;border-radius:18px;border:2px solid var(--line);background:var(--card);color:var(--ink);font-size:36px;font-weight:650;cursor:pointer;font-family:inherit;padding:8px}
+.opt.sound{font-size:26px;min-height:76px}
+.opt.ok{background:var(--good-bg);border-color:var(--good);color:var(--good)}.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.opt[disabled]{cursor:default}
+.fb{border-radius:16px;padding:12px 14px;margin:10px 0;font-size:17px}.fb.ok{background:var(--good-bg);color:var(--good)}.fb.bad{background:var(--warn-bg);color:var(--warn)}.fb.info{background:var(--soft);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.chip{border:1px solid var(--line);border-radius:12px;padding:6px 12px;text-align:center;background:var(--card);min-width:56px}.chip b{display:block;font-size:26px}.chip span{font-size:14px;color:var(--accent);font-weight:600}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:8px 0}
+.day{min-height:52px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:18px;cursor:pointer;font-family:inherit}
+.day.sel{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}.day.today:not(.sel){border-color:var(--accent);color:var(--accent)}
+.sess{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:18px;padding:12px 14px;margin:10px 0}
+.sess .t{flex:1}.sess .t b{font-size:18px}.sess .t span{display:block;font-size:14px;color:var(--muted)}
+.banner{background:var(--warn-bg);color:var(--ink);border:1px solid var(--warn);border-radius:18px;padding:12px 16px;margin:0 0 14px;font-size:15.5px}
+.banner summary{cursor:pointer;min-height:24px}.banner b{color:var(--warn)}.banner ul{margin:6px 0 6px 18px;padding:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px}
+.tile{min-height:58px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--muted);font-size:24px;font-weight:650;cursor:pointer;font-family:inherit}
+.tile.b0{opacity:.55}.tile.shaky{border-color:var(--warn);background:var(--warn-bg);color:var(--warn)}.tile.b1,.tile.b2{border-color:var(--accent);color:var(--accent)}.tile.b3,.tile.b4,.tile.b5{border-color:var(--good);background:var(--good-bg);color:var(--good)}
+.stat{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)}.stat:last-child{border:0}
+textarea,select{width:100%;font:15px ui-monospace,Menlo,monospace;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px}
+select{font:16px system-ui;min-height:48px}
+input[type=range]{width:100%;min-height:36px}
+.dots{display:flex;gap:6px;justify-content:center;margin:2px 0 10px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--accent)}
+.list{display:flex;flex-direction:column;gap:6px}.li{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer;background:transparent;color:var(--ink);font:inherit;text-align:left;min-height:48px}.li b{font-size:22px}
+@media (max-width:420px){#top .brand small{display:none}}
+</style>
+</head>
+<body>
+<div id="top"><div class="in">
+  <div class="brand">Русский <small>Russian Tutor</small></div>
+  <button class="navbtn" data-act="nav" data-v="home" id="nav-home">Home</button>
+  <button class="navbtn" data-act="nav" data-v="progress" id="nav-progress">Progress</button>
+</div></div>
+<main id="app"></main>
+
+<script>
+(function(){
+'use strict';
+
+/* =====================================================================
+   CONTENT  (all Russian below has been hand-checked)
+   Letter row: [Upper, spoken-sound, spoken-name, short label, hint, tip,
+                example word, example pronunciation, example meaning, trap-sound, group]
+   ===================================================================== */
+const LETTERS = [
+['А','а','а','ah','as in “father”','Looks like English A and sounds close to it: an open “ah”.','адрес','AH-drees','address',null,'friend'],
+['Б','ба','бэ','b','as in “bat”','Looks a bit like a 6 or a b. Says “b”.','банк','bahnk','bank',null,'new'],
+['В','ва','вэ','v','as in “van”','Looks like English B, but says “v”! A classic trap.','вода','va-DAH','water','b','false'],
+['Г','га','гэ','g','as in “go”','Like a hook or a gate. Says a hard “g”.','город','GOH-rut','city, town',null,'new'],
+['Д','да','дэ','d','as in “dog”','Looks like a little house with a floor. Says “d”.','дом','dohm','house, home',null,'new'],
+['Е','е','е','yeh','as in “yes”','Looks like English E, but says “yeh”.','еда','yeh-DAH','food','eh','false'],
+['Ё','ё','ё','yoh','as in “yo-yo”','An Е with two dots: says “yoh”. The dots mean it is always stressed.','ёлка','YOHL-ka','fir tree',null,'new'],
+['Ж','жа','жэ','zh','like the s in “measure”','Looks like a beetle. Says “zh”, like the s in pleasure.','жена','zheh-NAH','wife',null,'new'],
+['З','за','зэ','z','as in “zoo”','Looks like a number 3. Says “z”.','зима','zee-MAH','winter',null,'new'],
+['И','и','и','ee','as in “see”','Looks like a backwards N. Says “ee”.','игра','ee-GRAH','game',null,'new'],
+['Й','и краткое','и краткое','short y','like the y in “boy” (quick)','An И with a little hat: a quick “y”, like the end of “boy”.','мой','moy','my, mine',null,'new'],
+['К','ка','ка','k','as in “kit”','True friend: looks and sounds like English K.','кот','koht','cat',null,'friend'],
+['Л','ла','эль','l','as in “lamp”','Like a little tent. Says “l”.','лампа','LAHM-pa','lamp',null,'new'],
+['М','ма','эм','m','as in “mom”','True friend: looks and sounds like English M.','мама','MAH-ma','mom',null,'friend'],
+['Н','на','эн','n','as in “no”','Looks like English H, but says “n”!','нет','nyet','no','h','false'],
+['О','о','о','oh','as in “more”','True friend: looks like English O and says “oh”. When it is not stressed it softens to “ah”.','окно','ahk-NOH','window',null,'friend'],
+['П','па','пэ','p','as in “pot”','Looks like a doorway (the Greek pi). Says “p”.','парк','pahrk','park',null,'new'],
+['Р','ра','эр','r','rolled, like Spanish “pero”','Looks like English P, but says a rolled “r”!','ресторан','ree-sta-RAHN','restaurant','p','false'],
+['С','са','эс','s','as in “sun”','Looks like English C, but says “s”.','сок','sohk','juice','k','false'],
+['Т','та','тэ','t','as in “top”','True friend: looks and sounds like English T.','там','tahm','there',null,'friend'],
+['У','у','у','oo','as in “moon”','Looks like English Y, but says “oo”.','улица','OO-lee-tsa','street','y','false'],
+['Ф','фа','эф','f','as in “fan”','A circle on a stick. Says “f”.','фото','FOH-ta','photo',null,'new'],
+['Х','ха','ха','kh','like “ch” in Scottish “loch”','Looks like English X, but says “kh”: a breathy sound from the back of the mouth.','хлеб','khlyep','bread','ks','false'],
+['Ц','ца','цэ','ts','like “ts” in “cats”','Looks like a U with a little tail. Says “ts”.','цирк','tseerk','circus',null,'new'],
+['Ч','ча','че','ch','as in “cheese”','Looks like a number 4 or a chair. Says “ch”.','чай','chai','tea',null,'new'],
+['Ш','ша','ша','sh','as in “shop”','Three fingers. Says “sh”.','шапка','SHAHP-ka','hat',null,'new'],
+['Щ','ща','ща','shch','like “sh-ch” in “fresh cheese”','Ш with a tail: a longer, softer “shch”.','борщ','borshch','borscht (beet soup)',null,'new'],
+['Ъ','твёрдый знак','твёрдый знак','silent (hard sign)','silent: a tiny pause','The hard sign: silent. It only adds a tiny pause between sounds. Rare.','объект','ab-YEKT','object',null,'new'],
+['Ы','ы','ы','ih','like “i” in “bit”, deeper in the throat','No English twin. Say “ih”, a flat “i” from the back of the mouth.','рыба','RIH-ba','fish',null,'new'],
+['Ь','мягкий знак','мягкий знак','silent (soft sign)','silent: softens the letter before it','The soft sign: silent. It softens the letter before it (like the “ny” in “canyon”).','день','dyen','day',null,'new'],
+['Э','э','э','eh','as in “met”','A backwards E. Says “eh”.','это','EH-ta','this, it is',null,'new'],
+['Ю','ю','ю','yoo','as in “you”','Says “yoo”, like the word “you”.','юг','yook','south',null,'new'],
+['Я','я','я','yah','as in “yard”','A backwards R. Says “yah”.','яблоко','YAH-bla-ka','apple',null,'new']
+];
+// Letters that are easy to confuse by shape (used to choose look-alike distractors)
+const SHAPE_GROUPS = ['вбьъы','нпий','рфб','сэо','езёэ','учцщш','хжк','адляя','оф','тгп','млшщ','ипц','зэв'];
+const FALSE_FRIENDS = 'венрсух';   // look English, sound different
+
+const WORDS = [
+['мама','MAH-ma','mom'],['там','tahm','there'],['да','dah','yes'],['нет','nyet','no'],['кот','koht','cat'],
+['дом','dohm','house, home'],['город','GOH-rut','city, town'],['метро','myet-ROH','metro, subway'],['парк','pahrk','park'],['банк','bahnk','bank'],
+['ресторан','ree-sta-RAHN','restaurant'],['такси','tahk-SEE','taxi'],['кофе','KOH-fyeh','coffee'],['отель','a-TYEL','hotel'],['музей','moo-ZYAY','museum']
+];
+
+// Phrase row: [key, Cyrillic (shown), spoken text, pronunciation, meaning, note, match-for-microphone]
+const PHRASES = [
+['zdravstvuyte','Здравствуйте','Здравствуйте','ZDRAH-stvooy-tyeh','Hello (formal)','Safe with anyone, any time of day. The first “в” is not pronounced.','здравствуйте'],
+['privet','Привет','Привет','pree-VYET','Hi (informal)','For friends and people your age.','привет'],
+['menya','Меня зовут Дэвид','Меня зовут Дэвид','mee-NYA za-VOOT DEH-veed','My name is David','Literally “they call me…”. Swap Дэвид for any name.','меня зовут'],
+['pozhaluysta','Пожалуйста','Пожалуйста','pa-ZHAH-loo-sta','Please / You’re welcome','One word, two jobs.','пожалуйста'],
+['spasibo','Спасибо','Спасибо','spa-SEE-ba','Thank you','',"спасибо"],
+['da','Да','Да','dah','Yes','','да'],
+['net','Нет','Нет','nyet','No','','нет'],
+['dosvidaniya','До свидания','До свидания','da svee-DAH-nya','Goodbye','','до свидания'],
+['izvinite','Извините','Извините','eez-vee-NEE-tyeh','Excuse me / I’m sorry','Polite way to get attention or apologise.','извините'],
+['kakdela','Как дела?','Как дела?','kahk dee-LAH','How are you? / How’s it going?','','как дела'],
+['horosho','Хорошо','Хорошо','kha-ra-SHOH','Good / fine / OK','A natural reply to Как дела?: «Хорошо, спасибо» = “Good, thanks.”','хорошо'],
+['ne_ponimayu','Я не понимаю','Я не понимаю','ya nyeh pa-nee-MAH-yu','I don’t understand','A very useful one!','я не понимаю']
+];
+
+/* ---------- Build the unified item table ---------- */
+const ITEMS = {};
+const ORDER = {letter:[],word:[],phrase:[]};
+LETTERS.forEach(r=>{
+  const id='L:'+r[0].toLowerCase();
+  ITEMS[id]={id,kind:'letter',U:r[0],l:r[0].toLowerCase(),cyr:r[0]+' '+r[0].toLowerCase(),snd:r[1],name:r[2],label:r[3],hint:r[4],tip:r[5],ex:r[6],exTr:r[7],exEn:r[8],trap:r[9],group:r[10],meaning:r[3]+' — '+r[4]};
+  ORDER.letter.push(id);
+});
+WORDS.forEach(r=>{
+  const id='W:'+r[0];
+  ITEMS[id]={id,kind:'word',cyr:r[0],say:r[0],tr:r[1],meaning:r[2]};
+  ORDER.word.push(id);
+});
+PHRASES.forEach(r=>{
+  const id='P:'+r[0];
+  ITEMS[id]={id,kind:'phrase',cyr:r[1],say:r[2],tr:r[3],meaning:r[4],note:r[5],match:r[6]};
+  ORDER.phrase.push(id);
+});
+const L = s => s.split(' ').map(c=>'L:'+c);
+const W = s => s.split(' ').map(c=>'W:'+c);
+const P = s => s.split(' ').map(c=>'P:'+c);
+
+const DAYS = {
+1:{title:'First letters: the look-alikes',blurb:'Letters that look English but sound different (В Е Н Р С У Х), plus a few friendly ones. Tiny sessions of 5 letters.',
+   sessions:[{name:'Letters 1',kind:'learn',new:L('в е н р с')},{name:'Letters 2',kind:'learn',new:L('у х а к м')}]},
+2:{title:'More letters',blurb:'Easy look-alikes and the first “new shapes”. Each session starts by circling back to anything tricky from before.',
+   sessions:[{name:'Letters 3',kind:'learn',new:L('о т з б д')},{name:'Letters 4',kind:'learn',new:L('г л п ф и')}]},
+3:{title:'The rest of the alphabet + sounding out words',blurb:'The last 13 letters (all 33 covered by the end of today), then a “sound it out” reading drill with real words.',
+   sessions:[{name:'Letters 5',kind:'learn',new:L('э я ю ё й')},{name:'Letters 6',kind:'learn',new:L('ч ш щ ж')},{name:'Letters 7',kind:'learn',new:L('ц ы ъ ь')},
+             {name:'Sound it out: set 1',kind:'learn',new:W('мама там да нет кот')},{name:'Sound it out: set 2',kind:'learn',new:W('дом город метро парк банк')},{name:'Bonus words',kind:'learn',new:W('ресторан такси кофе отель музей')}]},
+4:{title:'Survival phrases, part 1',blurb:'Each phrase: hear it slowly, hear it again at normal speed, then say it back (mic is optional) and rate yourself.',
+   sessions:[{name:'Greetings & thanks',kind:'learn',new:P('zdravstvuyte privet menya pozhaluysta spasibo')},{name:'Yes, no, goodbye',kind:'learn',new:P('da net dosvidaniya')}]},
+5:{title:'Survival phrases, part 2',blurb:'Excuse me, how are you, and “I don’t understand”, then a practice round of all your phrases.',
+   sessions:[{name:'More phrases',kind:'learn',new:P('izvinite kakdela horosho ne_ponimayu')},{name:'Phrase practice',kind:'review',filter:['phrase'],size:8}]},
+6:{title:'Mini review',blurb:'A mixed round of letter sounds, words and phrases. Tricky and due items come first. Repeat as often as you like.',
+   sessions:[{name:'Mixed review',kind:'review',filter:null,size:12}]},
+7:{title:'Listening day',blurb:'Relax! No quizzes, no scores. Letters, words and phrases play on their own with the Cyrillic and meaning on screen. Pause or skip any time.',
+   sessions:[{name:'Listening mode',kind:'listen'}]}
+};
+
+/* =====================================================================
+   STATE + PERSISTENCE (localStorage key ruTutor.v1)
+   ===================================================================== */
+const KEY='ruTutor.v1';
+const HOURS={1:0,2:6,3:20,4:44,5:96};          // Leitner box -> hours until due
+const cfg={gap:2500, pause:350};
+let storageOK=true, memStore=null;
+
+function todayStr(now){const d=new Date(now||Date.now());return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function defaults(){return {v:1,start:todayStr(),followToday:true,day:1,items:{},done:{},settings:{slow:0.65,normal:0.9,voice:'',}};}
+function load(){
+  let raw=null;
+  try{raw=localStorage.getItem(KEY);}catch(e){storageOK=false;}
+  const d=defaults();
+  if(!raw) return d;
+  try{
+    const o=JSON.parse(raw);
+    if(o&&o.v===1&&o.items&&typeof o.items==='object'){
+      return Object.assign(d,o,{settings:Object.assign(d.settings,o.settings||{})});
+    }
+  }catch(e){}
+  return d;
+}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){storageOK=false;}
+}
+let S=load();
+save();
+
+function calendarDay(now){
+  const [y,m,d]=S.start.split('-').map(Number);
+  const a=Date.UTC(y,m-1,d); const n=new Date(now||Date.now());
+  const b=Date.UTC(n.getFullYear(),n.getMonth(),n.getDate());
+  return Math.min(7,Math.max(1,Math.round((b-a)/864e5)+1));
+}
+function currentDay(){return S.followToday?calendarDay():S.day;}
+
+/* =====================================================================
+   SPACED REPETITION (Leitner)
+   ===================================================================== */
+function isIntro(id){return !!S.items[id];}
+function touch(id,now){
+  if(!S.items[id]){S.items[id]={box:1,stumbles:0,streak:0,seen:0,last:0,due:now||Date.now(),shaky:false,intro:now||Date.now()};save();}
+  return S.items[id];
+}
+function grade(id,ok,now,hold){
+  now=now||Date.now();
+  const it=touch(id,now);
+  it.seen++;it.last=now;
+  // hold: a correct answer on the "one more try" right after a stumble stays in box 1,
+  // so the item is still circled back first in the next session.
+  if(ok){it.streak++;it.shaky=false;if(!hold)it.box=Math.min(5,it.box+1);}
+  else{it.stumbles++;it.streak=0;it.box=1;it.shaky=true;}
+  it.due=now+HOURS[it.box]*3600e3;
+  save();return it;
+}
+function needsReview(it,now){return !!it&&(it.shaky||it.due<=now);}
+function prio(id,now){
+  const it=S.items[id];
+  return [it.shaky?0:1, -it.stumbles, it.due, it.box];
+}
+function cmp(a,b){for(let i=0;i<a.length;i++){if(a[i]!==b[i])return a[i]<b[i]?-1:1;}return 0;}
+function pickDue(now,max,exclude,filter){
+  exclude=exclude||new Set();
+  const ids=Object.keys(S.items).filter(id=>ITEMS[id]&&!exclude.has(id)&&needsReview(S.items[id],now)&&(!filter||filter.includes(ITEMS[id].kind)));
+  ids.sort((a,b)=>cmp(prio(a,now),prio(b,now)));
+  return ids.slice(0,max);
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* =====================================================================
+   SPEECH (Web Speech API, ru-RU)
+   ===================================================================== */
+const TTS={
+  voices:[],ru:[],voice:null,status:'checking',token:0,cur:null,polls:0,
+  supported(){return 'speechSynthesis' in window&&typeof window.SpeechSynthesisUtterance==='function';},
+  init(){
+    if(!this.supported()){this.status='unsupported';return;}
+    const f=()=>this.refresh();
+    try{speechSynthesis.addEventListener('voiceschanged',f);}catch(e){try{speechSynthesis.onvoiceschanged=f;}catch(e2){}}
+    f();
+    const poll=()=>{this.polls++;f();if(this.status!=='ok'&&this.polls<8)setTimeout(poll,500);else if(this.status==='checking'){this.status='missing';rerenderBanner();}};
+    setTimeout(poll,400);
+  },
+  refresh(){
+    let v=[];try{v=speechSynthesis.getVoices()||[];}catch(e){}
+    this.voices=v;
+    this.ru=v.filter(x=>String(x.lang||'').replace('_','-').toLowerCase().startsWith('ru'));
+    const want=S.settings.voice;
+    let pick=this.ru.find(x=>x.name===want);
+    if(!pick)pick=this.ru.find(x=>/^ru[-_]RU$/i.test(x.lang)&&/milena|katya|google|microsoft|irina|pavel|yuri/i.test(x.name));
+    if(!pick)pick=this.ru.find(x=>/^ru[-_]RU$/i.test(x.lang))||this.ru[0]||null;
+    const before=this.status;
+    this.voice=pick;
+    this.status=pick?'ok':(this.polls>=8?'missing':'checking');
+    if(before!==this.status)rerenderBanner();
+  },
+  stop(){this.token++;if(this.supported()){try{speechSynthesis.cancel();}catch(e){}}},
+  say(text,rate,cb){
+    if(!this.supported()){cb&&cb();return;}
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='ru-RU';u.rate=rate;u.pitch=1;u.volume=1;
+    if(this.voice)u.voice=this.voice;
+    let done=false,ft=null;
+    const fin=()=>{if(done)return;done=true;clearTimeout(ft);cb&&cb();};
+    u.onend=fin;u.onerror=fin;
+    ft=setTimeout(fin,2500+text.length*450/Math.max(rate,.3));
+    this.cur=u;
+    try{speechSynthesis.speak(u);}catch(e){fin();}
+  },
+  // parts: [{t:'text', rate:0.9}]
+  seq(parts,onDone){
+    this.stop();
+    const my=this.token;let i=0;
+    const next=()=>{
+      if(my!==this.token)return;
+      if(i>=parts.length){onDone&&onDone();return;}
+      const p=parts[i++];
+      this.say(p.t,p.rate,()=>{ if(my!==this.token)return; if(i<parts.length)setTimeout(next,cfg.pause); else next(); });
+    };
+    next();
+  }
+};
+function rates(){return {slow:+S.settings.slow||0.65,normal:+S.settings.normal||0.9};}
+function itemParts(id,mode){          // mode: 'normal' | 'slow' | 'both'
+  const it=ITEMS[id],r=rates();
+  const mk=rt=>it.kind==='letter'?[{t:it.snd,rate:rt},{t:it.ex,rate:rt}]:[{t:it.say,rate:rt}];
+  if(mode==='slow')return mk(r.slow);
+  if(mode==='both')return mk(r.slow).concat(mk(r.normal));
+  return mk(r.normal);
+}
+function speakItem(id,mode,done){TTS.seq(itemParts(id,mode||'normal'),done);}
+function speakPart(id,which,slow){        // letter parts: sound | name | word
+  const it=ITEMS[id],r=rates(),rt=slow?r.slow:r.normal;
+  const t=which==='name'?it.name:which==='word'?it.ex:it.snd;
+  TTS.seq([{t,rate:rt}]);
+}
+function speakText(t,slow){const r=rates();TTS.seq([{t,rate:slow?r.slow:r.normal}]);}
+
+/* =====================================================================
+   Microphone (optional)
+   ===================================================================== */
+function norm(s){return String(s||'').toLowerCase().replace(/ё/g,'е').replace(/[^а-яa-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();}
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=[];for(let j=0;j<=n;j++)p[j]=j;for(let i=1;i<=m;i++){let c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c;}return p[n];}
+function sim(a,b){a=norm(a);b=norm(b);if(!a||!b)return 0;if(a.includes(b)||b.includes(a))return 1;return 1-lev(a,b)/Math.max(a.length,b.length);}
+function bestMatch(alts,target){let best={s:0,t:''};alts.forEach(t=>{const s=sim(t,target);if(s>=best.s)best={s,t};});return best;}
+function micSupported(){return !!(window.SpeechRecognition||window.webkitSpeechRecognition);}
+
+/* =====================================================================
+   SESSION BUILDER
+   ===================================================================== */
+function kindOf(id){return ITEMS[id].kind;}
+function reviewStepsFor(id,phase,now){
+  const k=kindOf(id);
+  if(k==='letter'){
+    if(!isIntro(id))return [{type:'intro',id,phase},{type:'quiz',id,qtype:'s2l',phase}];
+    const it=S.items[id];
+    return [{type:'quiz',id,qtype:(it.seen%2===0)?'s2l':'l2s',phase}];
+  }
+  if(k==='word')return [{type:'read',id,phase}];
+  return [{type:'phrase',id,phase}];
+}
+function lettersFirstThenRest(ids,phase){      // intro cards for unseen letters, then 2 quiz rounds
+  const steps=[];
+  const letters=ids.filter(id=>kindOf(id)==='letter');
+  const unseen=letters.filter(id=>!isIntro(id));
+  unseen.forEach(id=>steps.push({type:'intro',id,phase}));
+  if(letters.length){
+    shuffle(letters).forEach(id=>steps.push({type:'quiz',id,qtype:'s2l',phase}));
+    shuffle(letters).forEach(id=>steps.push({type:'quiz',id,qtype:'l2s',phase,extra:true}));
+  }
+  ids.filter(id=>kindOf(id)==='word').forEach(id=>steps.push({type:'read',id,phase}));
+  ids.filter(id=>kindOf(id)==='phrase').forEach(id=>steps.push({type:'phrase',id,phase}));
+  return steps;
+}
+function buildSession(def,now){
+  now=now||Date.now();
+  let steps=[],counts={circle:0,fresh:0,practice:0};
+  if(def.kind==='review'){
+    const size=def.size||10,filter=def.filter;
+    const inFilter=id=>!filter||filter.includes(kindOf(id));
+    const pool=Object.keys(S.items).filter(id=>ITEMS[id]&&inFilter(id));
+    const key=id=>{const it=S.items[id];return [it.shaky?0:(it.due<=now?1:2),-it.stumbles,it.box,it.last];};
+    const buckets={letter:[],word:[],phrase:[]};
+    pool.forEach(id=>buckets[kindOf(id)].push(id));
+    Object.keys(buckets).forEach(k=>buckets[k].sort((a,b)=>cmp(key(a),key(b))));
+    // round-robin so letters and phrases are mixed
+    const seqKinds=(filter&&filter.length===1)?[filter[0]]:['letter','phrase','letter','word'];
+    const chosen=[];let guard=0;
+    while(chosen.length<size&&guard++<500){
+      let progressed=false;
+      for(const k of seqKinds){
+        if(chosen.length>=size)break;
+        if(buckets[k].length){chosen.push(buckets[k].shift());progressed=true;}
+      }
+      if(!progressed)break;
+    }
+    // top up with unseen curriculum items when the pool is thin
+    const want=Math.min(size,6);
+    if(chosen.length<want){
+      const kinds=(filter&&filter.length)?filter:['letter','phrase'];
+      const unseen=[];
+      kinds.forEach(k=>ORDER[k].forEach(id=>{if(!isIntro(id)&&!chosen.includes(id))unseen.push(id);}));
+      if(kinds.length>1){unseen.sort((a,b)=>(ORDER[kindOf(a)].indexOf(a)-ORDER[kindOf(b)].indexOf(b))||(kindOf(a)<kindOf(b)?-1:1));}
+      const add=unseen.slice(0,Math.min(5,want-chosen.length));
+      add.forEach(id=>chosen.push(id));
+      counts.fresh=add.length;
+    }
+    chosen.forEach(id=>{
+      const fresh=!isIntro(id);
+      const phase=fresh?'new':(needsReview(S.items[id],now)?'circle':'practice');
+      if(phase==='circle')counts.circle++; else if(phase==='practice')counts.practice++;
+      steps=steps.concat(reviewStepsFor(id,phase,now));
+    });
+  } else if(def.kind==='learn'){
+    const newIds=def.new;
+    const circle=pickDue(now,6,new Set(newIds));
+    circle.forEach(id=>{steps=steps.concat(reviewStepsFor(id,'circle',now));});
+    counts.circle=circle.length;
+    const unseen=newIds.filter(id=>!isIntro(id));
+    const again=newIds.filter(id=>isIntro(id)&&!circle.includes(id));
+    // already-met items in this session's list: practice them
+    if(again.length){steps=steps.concat(lettersFirstThenRest(again,'practice'));counts.practice=again.length;}
+    if(unseen.length){steps=steps.concat(lettersFirstThenRest(unseen,'new'));counts.fresh=unseen.length;}
+  }
+  // Order: circle-back first, then practice, then new (stable)
+  const order={circle:0,practice:1,new:2};
+  if(def.kind==='learn'){steps=steps.map((s,i)=>({s,i})).sort((a,b)=>(order[a.s.phase]-order[b.s.phase])||(a.i-b.i)).map(x=>x.s);}
+  steps.unshift({type:'summary',phase:'info',counts});
+  return {steps,counts};
+}
+
+/* ---------- quiz options ---------- */
+function shapeScore(a,b){ // a,b are lowercase letters
+  let s=0;SHAPE_GROUPS.forEach(g=>{if(g.includes(a)&&g.includes(b))s+=2;});
+  if(FALSE_FRIENDS.includes(a)&&FALSE_FRIENDS.includes(b))s+=1;
+  return s;
+}
+function letterPool(targetId){
+  const known=Object.keys(S.items).filter(id=>kindOf(id)==='letter');
+  if(!known.includes(targetId))known.push(targetId);
+  return known;
+}
+function distractors(targetId,n,excludeIds){
+  const t=ITEMS[targetId];
+  let pool=letterPool(targetId).filter(id=>id!==targetId&&!(excludeIds||[]).includes(id));
+  const scored=s=>shuffle(s).map(id=>({id,sc:shapeScore(t.l,ITEMS[id].l)})).sort((a,b)=>b.sc-a.sc).map(x=>x.id);
+  let out=scored(pool).slice(0,n);
+  if(out.length<n){ // pad from the whole alphabet (look-alikes first)
+    const rest=ORDER.letter.filter(id=>id!==targetId&&!out.includes(id)&&!(excludeIds||[]).includes(id));
+    out=out.concat(scored(rest).slice(0,n-out.length));
+  }
+  return out;
+}
+function makeOptions(step){
+  const t=ITEMS[step.id];
+  if(step.qtype==='s2l'){
+    const exclude=(t.snd.length===2&&t.l!=='а')?['L:а']:[];   // consonant+а syllable: don't offer А
+    const ds=distractors(step.id,3,exclude);
+    return shuffle([step.id].concat(ds)).map(id=>({k:id,html:ITEMS[id].U+' '+ITEMS[id].l,ok:id===step.id}));
+  }
+  const labels=[];
+  if(t.trap)labels.push(t.trap);
+  distractors(step.id,5).forEach(id=>{const lb=ITEMS[id].label;if(lb!==t.label&&!labels.includes(lb))labels.push(lb);});
+  const picks=labels.slice(0,3);
+  return shuffle([t.label].concat(picks)).map(lb=>({k:lb,html:lb,ok:lb===t.label}));
+}
+
+/* =====================================================================
+   UI STATE + RENDER
+   ===================================================================== */
+const app=document.getElementById('app');
+let view='home',sess=null,LS=null,toast='';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let bannerOpen=null;     // null = default (open on Home, folded elsewhere)
+function bannerHTML(){
+  if(TTS.status==='ok'||TTS.status==='checking')return '';
+  const unsup=TTS.status==='unsupported';
+  const open=bannerOpen===null?(view==='home'):bannerOpen;
+  const title=unsup?'This browser can’t speak out loud.':'No Russian voice found on this device yet.';
+  return `<details class="banner" id="banner" ${open?'open':''}><summary><b>🔇 ${title}</b> <span class="small">Tap for how to fix</span></summary>
+  ${unsup?'<p>Try the latest Safari (iPhone/Mac), Chrome or Edge. You can still read everything here, but you need sound to learn properly.</p>':
+  `<p>The app talks using your device’s own voices, so you just need to switch one on (it’s free and takes a minute):</p>
+  <ul><li><b>iPhone / iPad:</b> Settings → Accessibility → Spoken Content → Voices → Russian → pick one (e.g. Milena) and download it.</li>
+  <li><b>Mac:</b> System Settings → Accessibility → Spoken Content → System Voice → Manage Voices… → Russian → download one (e.g. Milena or Yuri).</li>
+  <li><b>Chrome / Edge:</b> usually works automatically when you’re online (Google / Microsoft Russian voices). On Windows: Settings → Time &amp; Language → Speech → Add voices → Russian.</li></ul>
+  <p>Then reload this page. Until then, the audio may sound wrong, because it will use an English voice.</p>`}
+  <button class="btn sm" data-act="recheck">Check again</button></details>`;
+}
+function rerenderBanner(){
+  const b=document.getElementById('banner');
+  const html=bannerHTML();
+  if(b){b.outerHTML=html;}
+  else if(html){app.insertAdjacentHTML('afterbegin',html);}
+}
+
+function render(){
+  document.getElementById('nav-home').classList.toggle('on',view==='home'||view==='session'||view==='listen');
+  document.getElementById('nav-progress').classList.toggle('on',view==='progress');
+  let body='';
+  if(view==='home')body=homeHTML();
+  else if(view==='session')body=sessionHTML();
+  else if(view==='listen')body=listenHTML();
+  else body=progressHTML();
+  app.innerHTML=bannerHTML()+body;
+}
+function go(v,noScroll){
+  if(v!=='listen')stopListen(true);
+  TTS.stop();view=v;render();if(!noScroll)window.scrollTo(0,0);
+}
+
+/* ---------- stats ---------- */
+function stats(now){
+  now=now||Date.now();
+  const ids=Object.keys(S.items).filter(id=>ITEMS[id]);
+  const by=k=>ids.filter(id=>kindOf(id)===k);
+  const lm=by('letter');
+  return {
+    lettersMet:lm.length,
+    lettersSolid:lm.filter(id=>S.items[id].box>=3&&!S.items[id].shaky).length,
+    words:by('word').length,phrases:by('phrase').length,
+    needing:ids.filter(id=>needsReview(S.items[id],now)),
+    shaky:ids.filter(id=>S.items[id].shaky).length
+  };
+}
+
+/* ---------- HOME ---------- */
+function homeHTML(){
+  const day=currentDay(),cal=calendarDay(),d=DAYS[day],st=stats();
+  const chips=[1,2,3,4,5,6,7].map(n=>`<button class="day ${n===day?'sel':''} ${n===cal?'today':''}" data-act="day" data-v="${n}" aria-label="Day ${n}">${n}</button>`).join('');
+  const sess=d.sessions.map((s,i)=>{
+    const done=S.done[day+':'+i]||0;
+    let sub='';
+    if(s.kind==='listen')sub='Relaxed audio · no quiz';
+    else if(s.kind==='review')sub=s.filter?'Practise your phrases':'Letters, words & phrases mixed';
+    else{
+      const k=kindOf(s.new[0]);
+      sub=k==='letter'?'New: '+s.new.map(id=>ITEMS[id].U).join(' '):k==='word'?'New words: '+s.new.map(id=>ITEMS[id].cyr).join(', '):'New: '+s.new.map(id=>ITEMS[id].cyr).join(', ');
+    }
+    return `<div class="sess"><div class="t"><b>${esc(s.name)}</b><span>${esc(sub)}${done?' · done ×'+done:''}</span></div>
+      <button class="btn primary" data-act="start" data-i="${i}">${done?'Again':'Start'}</button></div>`;
+  }).join('');
+  const need=st.needing.length;
+  return `<div class="card">
+    <h1>Day ${day} of 7 ${day===cal?'<span class="badge">today</span>':''}</h1>
+    <div class="days" role="group" aria-label="Day selector">${chips}</div>
+    <div class="row" style="margin-top:6px">
+      <button class="btn sm soft" data-act="today">Jump to today (Day ${cal})</button>
+      <button class="btn sm" data-act="nextday" ${day>=7?'disabled':''}>Next day →</button>
+    </div>
+    <p class="muted small">${S.followToday?'Following the calendar: one day per day.':'You picked this day yourself. “Jump to today” goes back to the calendar day.'}</p>
+  </div>
+  <div class="card"><h2>${esc(d.title)}</h2><p class="muted">${esc(d.blurb)}</p>${sess}</div>
+  <div class="card">
+    <h3>Your progress</h3>
+    <div class="stat"><span>Letters met</span><b>${st.lettersMet} / 33</b></div>
+    <div class="stat"><span>Letters feeling solid</span><b>${st.lettersSolid}</b></div>
+    <div class="stat"><span>Items to circle back to</span><b>${need}</b></div>
+    <div class="row">
+      ${need?`<button class="btn soft" data-act="quick">Quick review (${Math.min(need,8)})</button>`:''}
+      <button class="btn" data-act="testvoice">🔊 Test voice</button>
+      <button class="btn" data-act="listenany">🎧 Relaxed listening</button>
+    </div>
+    ${storageOK?'':'<p class="small" style="color:var(--bad)">This browser isn’t letting the page save progress (private mode?). You can still practise, but progress will reset when you close the tab.</p>'}
+  </div>`;
+}
+
+/* ---------- SESSION ---------- */
+function startSession(def,dayNo,idx){
+  TTS.stop();
+  if(def.kind==='listen'){startListen();return;}
+  const b=buildSession(def);
+  sess={def,dayNo,idx,steps:b.steps,i:0,correct:0,total:0,requeued:{},counts:b.counts,finished:false};
+  view='session';render();window.scrollTo(0,0);
+}
+function cur(){return sess&&sess.steps[sess.i];}
+function progressBar(){
+  const real=sess.steps.filter(s=>s.type!=='summary'&&s.type!=='done');
+  const idx=Math.max(0,sess.i-1);
+  const pct=Math.min(100,Math.round(100*idx/Math.max(1,real.length)));
+  return `<div class="bar"><i style="width:${pct}%"></i></div>`;
+}
+function phaseBadge(p){
+  return p==='circle'?'<span class="badge circle">Circling back</span>':p==='new'?'<span class="badge new">New</span>':p==='again'?'<span class="badge circle">One more try</span>':'<span class="badge">Practice</span>';
+}
+const CHEER_OK=['Yes! Nice ear.','Exactly right!','You got it!','Lovely, that’s it!','Spot on!'];
+const CHEER_BAD=['Almost! These are tricky, and it will come back around.','No worries, everyone mixes these up at first.','Good try! Now you know it. We’ll revisit it.','Close one. Listen to it once more and it will stick.'];
+const pickOne=a=>a[Math.floor(Math.random()*a.length)];
+
+function sessionHTML(){
+  const s=cur();
+  if(!s)return '';
+  if(s.type==='summary')return summaryHTML(s);
+  if(s.type==='done')return doneHTML(s);
+  const head=progressBar();
+  if(s.type==='intro')return head+introHTML(s);
+  if(s.type==='quiz')return head+quizHTML(s);
+  if(s.type==='read')return head+readHTML(s);
+  if(s.type==='phrase')return head+phraseHTML(s);
+  return '';
+}
+function playButtons(id,extra){
+  return `<div class="playrow"><button class="btn primary big" data-act="play" data-id="${esc(id)}" aria-label="Play">▶ Play</button>
+  <button class="btn soft slow" data-act="slow" data-id="${esc(id)}" aria-label="Play slowly">🐢 Slow</button></div>${extra||''}`;
+}
+function summaryHTML(s){
+  const c=s.counts;
+  const parts=[];
+  if(c.circle)parts.push(`<p>👋 First we’ll <b>circle back</b> to ${c.circle} item${c.circle>1?'s':''} you met before (the tricky or due ones).</p>`);
+  else parts.push('<p>✨ Nothing waiting from before. A fresh start!</p>');
+  if(c.practice)parts.push(`<p>🔁 Then a little practice of ${c.practice} item${c.practice>1?'s':''} from this session.</p>`);
+  if(c.fresh)parts.push(`<p>🌱 Then <b>${c.fresh} new</b> thing${c.fresh>1?'s':''}.</p>`);
+  return `<div class="card center"><h2>${esc(sess.def.name)}</h2>${parts.join('')}
+  <p class="muted small">Short and sweet. Turn your sound on. Mistakes are completely fine here.</p>
+  <button class="btn primary block" data-act="begin">Let’s go →</button></div>`;
+}
+function introHTML(s){
+  const it=ITEMS[s.id];
+  const fam=it.group==='false'?'<span class="badge circle">Look-alike trap</span> ':it.group==='friend'?'<span class="badge new">True friend</span> ':'';
+  return `<div class="card">${phaseBadge(s.phase)} ${fam}
+  <div class="cyr letter">${esc(it.U)} ${esc(it.l)}</div>
+  <div class="tr">${esc(it.label)}</div>
+  <div class="hint">${esc(it.hint)}</div>
+  ${playButtons(s.id)}
+  <div class="row">
+    <button class="btn sm" data-act="part" data-id="${esc(s.id)}" data-w="snd">Sound</button>
+    <button class="btn sm" data-act="part" data-id="${esc(s.id)}" data-w="name">Letter name</button>
+    <button class="btn sm" data-act="part" data-id="${esc(s.id)}" data-w="word">Example word</button>
+  </div>
+  <div class="tip">💡 ${esc(it.tip)}</div>
+  <div class="ex"><div class="c">${esc(it.ex)}</div><div class="tr" style="font-size:20px">${esc(it.exTr)}</div><div class="muted">${esc(it.exEn)}</div></div>
+  <button class="btn primary block" data-act="next">Got it, next →</button></div>`;
+}
+function quizHTML(s){
+  const it=ITEMS[s.id];
+  if(!s.ui){s.ui={opts:makeOptions(s),answered:false};}
+  const u=s.ui;
+  const opts=u.opts.map(o=>{
+    let cls='opt'+(s.qtype==='l2s'?' sound':'');
+    if(u.answered){if(o.ok)cls+=' ok';else if(o.k===u.choice)cls+=' bad';}
+    return `<button class="${cls}" data-act="answer" data-k="${esc(o.k)}" ${u.answered?'disabled':''}>${esc(o.html)}</button>`;
+  }).join('');
+  let fb='';
+  if(u.answered){
+    fb=u.right?`<div class="fb ok">✅ ${esc(u.msg)} <b>${esc(it.U+' '+it.l)}</b> = “${esc(it.label)}” (${esc(it.hint)}).</div>`
+              :`<div class="fb bad">💛 ${esc(u.msg)} <b>${esc(it.U+' '+it.l)}</b> = “${esc(it.label)}” (${esc(it.hint)}).</div>`;
+  }
+  const prompt=s.qtype==='s2l'?'👂 Listen. Which letter makes this sound?':'👀 Which sound does this letter make?';
+  const top=s.qtype==='s2l'
+    ?`<div class="playrow"><button class="btn primary big" data-act="part" data-id="${esc(s.id)}" data-w="snd" aria-label="Hear the sound again">🔊 Hear it</button><button class="btn soft slow" data-act="part" data-id="${esc(s.id)}" data-w="snd" data-slow="1">🐢 Slow</button></div>`
+    :`<div class="cyr letter">${esc(it.U)} ${esc(it.l)}</div>`;
+  const after=u.answered?`<div class="row">${playBtnsInline(s.id)}</div><button class="btn primary block" data-act="next">Next →</button>`:'';
+  return `<div class="card">${phaseBadge(s.phase)}<h3>${prompt}</h3>${top}<div class="opts">${opts}</div>${fb}${after}</div>`;
+}
+function playBtnsInline(id){return `<button class="btn sm" data-act="play" data-id="${esc(id)}">▶ Play again</button><button class="btn sm" data-act="slow" data-id="${esc(id)}">🐢 Slow</button>`;}
+function readHTML(s){
+  const it=ITEMS[s.id];
+  if(!s.ui)s.ui={hints:false,revealed:false,rated:false};
+  const u=s.ui;
+  let hints='';
+  if(u.hints){
+    const chars=[...it.cyr].map(ch=>{const L2=ITEMS['L:'+ch];return `<div class="chip"><b>${esc(ch)}</b><span>${L2?esc(L2.label.replace(/ \(.*\)/,'')):''}</span></div>`;}).join('');
+    hints=`<div class="chips">${chars}</div><p class="hint small">Rough sounds only: stress and reduced vowels change them a little.</p>`;
+  }
+  let body='';
+  if(!u.revealed){
+    body=`<p class="center muted">Try to sound it out in your head first…</p>
+    <div class="row"><button class="btn" data-act="hints" ${u.hints?'disabled':''}>🔤 Letter hints</button><button class="btn primary" data-act="reveal">👂 Reveal &amp; hear it</button></div>`;
+  }else{
+    body=`<div class="tr">${esc(it.tr)}</div><div class="mean">${esc(it.meaning)}</div>${playButtons(s.id)}${rateButtons(s)}`;
+  }
+  return `<div class="card">${phaseBadge(s.phase)}<h3>📖 Sound it out</h3><div class="cyr word">${esc(it.cyr)}</div>${hints}${body}</div>`;
+}
+function rateButtons(s){
+  if(s.ui.rated)return `<button class="btn primary block" data-act="next">Next →</button>`;
+  return `<p class="center muted small">How did that go?</p><div class="row"><button class="btn good" data-act="rate" data-ok="1">👍 Got it</button><button class="btn warn" data-act="rate" data-ok="0">😅 Stumbled</button></div>`;
+}
+function phraseHTML(s){
+  const it=ITEMS[s.id];
+  if(!s.ui)s.ui={stage:0,rated:false,mic:null};
+  const u=s.ui;
+  const dots=`<div class="dots">${[0,1,2].map(i=>`<i class="${i<=u.stage?'on':''}"></i>`).join('')}</div>`;
+  const labels=['Step 1 of 3 · Listen (slowly)','Step 2 of 3 · Listen again (normal speed)','Step 3 of 3 · Your turn: say it out loud'];
+  let ctl='';
+  if(u.stage===0){
+    ctl=`${playButtons(s.id)}<button class="btn primary block" data-act="stage">Next: hear it at normal speed →</button>`;
+  }else if(u.stage===1){
+    ctl=`${playButtons(s.id)}<button class="btn primary block" data-act="stage">Next: your turn →</button>`;
+  }else{
+    let mic='';
+    if(micSupported()){
+      const m=u.mic;
+      mic=`<button class="btn soft block" data-act="mic" ${m&&m.listening?'disabled':''}>${m&&m.listening?'🎤 Listening…':'🎤 Say it (optional)'}</button>`;
+      if(m&&m.msg)mic+=`<div class="fb info">${esc(m.msg)}</div>`;
+    }else{
+      mic=`<p class="muted small center">🎤 Mic checking isn’t available in this browser. That’s fine: just say it out loud and rate yourself.</p>`;
+    }
+    ctl=`${playButtons(s.id)}${mic}${s.ui.rated?'<button class="btn primary block" style="margin-top:10px" data-act="next">Next →</button>':`<p class="center muted small" style="margin-top:12px">Say it out loud, then be honest with yourself:</p><div class="row"><button class="btn good" data-act="rate" data-ok="1">👍 Got it</button><button class="btn warn" data-act="rate" data-ok="0">😅 Stumbled</button></div>`}`;
+  }
+  const note=it.note&&u.stage===0?`<div class="tip">💡 ${esc(it.note)}</div>`:'';
+  return `<div class="card">${phaseBadge(s.phase)}<h3>${labels[u.stage]}</h3>${dots}
+  <div class="cyr phrase">${esc(it.cyr)}</div><div class="tr">${esc(it.tr)}</div><div class="mean">${esc(it.meaning)}</div>${note}${ctl}</div>`;
+}
+function doneHTML(){
+  const pct=sess.total?Math.round(100*sess.correct/sess.total):100;
+  const msg=pct>=80?'Wonderful work! 🎉':pct>=50?'Good progress! Anything tricky will come back around. 🌱':'Great that you showed up! Everything tricky will return in your next session, and that’s how it sticks. 💪';
+  const day=sess.dayNo,d=DAYS[day],nextIdx=sess.idx+1<d.sessions.length?sess.idx+1:-1;
+  return `<div class="card center"><h2>Session complete</h2><p style="font-size:20px">${msg}</p>
+  ${sess.total?`<p class="muted">${sess.correct} of ${sess.total} right first time.</p>`:''}
+  <div class="row"><button class="btn" data-act="repeat">🔁 Repeat this session</button>
+  ${nextIdx>=0?`<button class="btn primary" data-act="start" data-i="${nextIdx}">Next: ${esc(d.sessions[nextIdx].name)} →</button>`:''}
+  <button class="btn" data-act="nav" data-v="home">Back to Day ${day}</button></div></div>`;
+}
+
+/* ---------- session actions ---------- */
+function autoplay(){
+  const s=cur();if(!s)return;
+  if(s.type==='intro'){touch(s.id);speakItem(s.id,'normal');}
+  else if(s.type==='quiz'&&s.qtype==='s2l'){speakPart(s.id,'snd',false);}
+  else if(s.type==='phrase'){
+    if(s.ui&&s.ui.stage===0)speakItem(s.id,'slow');
+    else if(s.ui&&s.ui.stage===1)speakItem(s.id,'normal');
+  }
+}
+function advance(){
+  sess.i++;
+  if(sess.i>=sess.steps.length){
+    const k=sess.dayNo+':'+sess.idx;S.done[k]=(S.done[k]||0)+1;save();
+    sess.steps.push({type:'done'});sess.i=sess.steps.length-1;
+  }
+  const s=cur();
+  if(s&&s.type==='intro')touch(s.id);
+  render();window.scrollTo(0,0);
+  autoplay();
+}
+function requeue(s){
+  const key=s.type+':'+s.id+':'+(s.qtype||'');
+  if(sess.requeued[key]||s.retry)return;
+  sess.requeued[key]=1;
+  const n=Object.assign({},s,{phase:'again',retry:true,ui:null,extra:false});
+  // insert a few steps later (or at end)
+  const at=Math.min(sess.steps.length,sess.i+4);
+  sess.steps.splice(at,0,n);
+}
+function answerQuiz(k){
+  const s=cur(),u=s.ui;if(u.answered)return;
+  const opt=u.opts.find(o=>o.k===k);
+  u.answered=true;u.choice=k;u.right=!!(opt&&opt.ok);
+  u.msg=u.right?pickOne(CHEER_OK):pickOne(CHEER_BAD);
+  if(!s.retry){sess.total++;if(u.right)sess.correct++;}
+  if(u.right){if(!s.extra)grade(s.id,true,null,!!s.retry);}
+  else{grade(s.id,false);requeue(s);}
+  render();
+  speakItem(s.id,'normal');
+}
+function rate(ok){
+  const s=cur();if(s.ui.rated)return;
+  s.ui.rated=true;
+  if(!s.retry){sess.total++;if(ok)sess.correct++;}
+  grade(s.id,ok,null,ok&&!!s.retry);
+  if(!ok)requeue(s);
+  render();
+}
+function startMic(){
+  const s=cur(),it=ITEMS[s.id];
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){return;}
+  TTS.stop();
+  let rec;
+  try{rec=new SR();}catch(e){s.ui.mic={msg:'The microphone isn’t available here. No problem, just rate yourself below.'};render();return;}
+  rec.lang='ru-RU';rec.interimResults=false;rec.maxAlternatives=3;rec.continuous=false;
+  s.ui.mic={listening:true};render();
+  rec.onresult=ev=>{
+    const alts=[];const r=ev.results&&ev.results[0];
+    if(r)for(let i=0;i<r.length;i++)alts.push(r[i].transcript);
+    const m=bestMatch(alts,it.match||it.cyr);
+    s.ui.mic=m.s>=0.7?{msg:`I heard “${m.t}”. That sounds really close! 🎉 Rate yourself below.`}
+                       :{msg:`I heard “${m.t}”. Not quite the same, but speech recognition is imperfect, so trust your own ear. Try once more, or rate yourself below.`};
+    render();
+  };
+  rec.onerror=ev=>{
+    const e=ev&&ev.error;
+    s.ui.mic={msg:e==='not-allowed'||e==='service-not-allowed'?'Microphone permission is off for this page. That’s okay, just use the buttons below.':e==='no-speech'?'I didn’t hear anything. Try again, or just rate yourself below.':'The microphone check isn’t working here. No problem, rate yourself below.'};
+    render();
+  };
+  rec.onend=()=>{if(s.ui.mic&&s.ui.mic.listening){s.ui.mic={msg:'Didn’t catch that. Try again or rate yourself below.'};render();}};
+  try{rec.start();}catch(e){s.ui.mic={msg:'The microphone couldn’t start. Just rate yourself below.'};render();}
+}
+
+/* ---------- LISTENING MODE (Day 7) ---------- */
+function buildListenList(filter){
+  if(filter==='letters')return ORDER.letter.slice();
+  if(filter==='words')return ORDER.word.slice();
+  if(filter==='phrases')return ORDER.phrase.slice();
+  const l=ORDER.letter.slice(),w=ORDER.word.slice(),p=ORDER.phrase.slice(),out=[];
+  while(l.length||w.length||p.length){
+    for(let i=0;i<3&&l.length;i++)out.push(l.shift());
+    if(w.length)out.push(w.shift());
+    if(p.length)out.push(p.shift());
+  }
+  return out;
+}
+function startListen(){
+  stopListen(true);
+  LS={list:buildListenList('all'),i:0,playing:false,filter:'all',timer:null,slowOnly:false,end:false};
+  view='listen';render();window.scrollTo(0,0);
+}
+function stopListen(silent){
+  if(LS){clearTimeout(LS.timer);LS.playing=false;}
+  if(!silent)TTS.stop();
+}
+function listenSpeak(){
+  clearTimeout(LS.timer);
+  const id=LS.list[LS.i];const it=ITEMS[id];
+  const r=rates();
+  let parts;
+  if(it.kind==='letter')parts=[{t:it.snd,rate:LS.slowOnly?r.slow:r.normal},{t:it.ex,rate:LS.slowOnly?r.slow:r.normal}];
+  else parts=LS.slowOnly?[{t:it.say,rate:r.slow}]:[{t:it.say,rate:r.normal},{t:it.say,rate:r.slow}];
+  const my=++LS.run;
+  TTS.seq(parts,()=>{
+    if(!LS||LS.run!==my||!LS.playing)return;
+    LS.timer=setTimeout(()=>{
+      if(!LS||!LS.playing)return;
+      if(LS.i+1>=LS.list.length){LS.playing=false;LS.end=true;render();return;}
+      LS.i++;LS.end=false;render();listenSpeak();
+    },cfg.gap);
+  });
+}
+function listenHTML(){
+  if(!LS)return '';
+  if(LS.run===undefined)LS.run=0;
+  const id=LS.list[LS.i],it=ITEMS[id];
+  let card;
+  if(it.kind==='letter'){
+    card=`<div class="cyr letter">${esc(it.U)} ${esc(it.l)}</div><div class="tr">${esc(it.label)}</div><div class="hint">${esc(it.hint)}</div>
+    <div class="ex"><div class="c">${esc(it.ex)}</div><div class="tr" style="font-size:20px">${esc(it.exTr)}</div><div class="muted">${esc(it.exEn)}</div></div>`;
+  }else{
+    card=`<div class="cyr ${it.kind==='word'?'word':'phrase'}">${esc(it.cyr)}</div><div class="tr">${esc(it.tr)}</div><div class="mean">${esc(it.meaning)}</div>`;
+  }
+  const f=(k,t)=>`<button class="btn sm ${LS.filter===k?'soft':''}" data-act="lfilter" data-v="${k}">${t}</button>`;
+  return `<div class="card"><span class="badge">🎧 Listening · ${esc(it.kind)} ${LS.i+1} of ${LS.list.length}</span>
+  <p class="muted small">Just relax and listen. No quiz, no score.</p>
+  ${card}
+  ${LS.end?'<div class="fb ok">That’s the whole list. Beautiful listening! You can replay it any time. 🌟</div>':''}
+  <div class="row" style="flex-wrap:nowrap"><button class="btn" style="flex:1 1 0;padding:12px 6px" data-act="lprev" aria-label="Previous">⏮ Back</button>
+  <button class="btn primary" style="flex:1 1 0;padding:12px 6px" data-act="lpause">${LS.playing?'⏸ Pause':'▶ Play'}</button>
+  <button class="btn" style="flex:1 1 0;padding:12px 6px" data-act="lnext" aria-label="Next">Next ⏭</button></div>
+  <div class="row"><button class="btn sm" data-act="lreplay">🔁 Replay this one</button><button class="btn sm ${LS.slowOnly?'soft':''}" data-act="lslow">🐢 Slow only: ${LS.slowOnly?'on':'off'}</button></div>
+  <div class="row">${f('all','All')}${f('letters','Letters')}${f('words','Words')}${f('phrases','Phrases')}</div></div>`;
+}
+
+/* ---------- PROGRESS ---------- */
+function progressHTML(){
+  const st=stats(),now=Date.now();
+  const tiles=ORDER.letter.map(id=>{
+    const it=S.items[id];let cls='b0';
+    if(it)cls=it.shaky?'shaky':'b'+it.box;
+    return `<button class="tile ${cls}" data-act="tile" data-id="${esc(id)}" aria-label="${esc(ITEMS[id].label)}">${esc(ITEMS[id].U)}</button>`;
+  }).join('');
+  const need=st.needing.map(id=>{const it=ITEMS[id];return `<button class="li" data-act="tileany" data-id="${esc(id)}"><b>${esc(it.kind==='letter'?it.U+' '+it.l:it.cyr)}</b><span class="muted">${esc(it.kind==='letter'?it.label:it.meaning)}</span></button>`;}).join('');
+  const rs=rates();
+  const voiceOpts=['<option value="">Automatic (best Russian voice)</option>'].concat(TTS.ru.map(v=>`<option value="${esc(v.name)}" ${v.name===S.settings.voice?'selected':''}>${esc(v.name)} (${esc(v.lang)})</option>`)).join('');
+  return `<div class="card"><h2>Progress</h2>
+    <div class="stat"><span>Letters met</span><b>${st.lettersMet} / 33</b></div>
+    <div class="stat"><span>Letters feeling solid</span><b>${st.lettersSolid}</b></div>
+    <div class="stat"><span>Words practised</span><b>${st.words} / ${ORDER.word.length}</b></div>
+    <div class="stat"><span>Phrases practised</span><b>${st.phrases} / ${ORDER.phrase.length}</b></div>
+    <div class="stat"><span>Items needing review</span><b>${st.needing.length}</b></div>
+    <h3 style="margin-top:14px">Alphabet map <span class="muted small">(tap to hear)</span></h3>
+    <div class="grid">${tiles}</div>
+    <p class="muted small">Grey = not met yet · orange = tricky · blue = learning · green = solid.</p></div>
+  ${st.needing.length?`<div class="card"><h3>Waiting to be circled back</h3><div class="list">${need}</div></div>`:''}
+  <div class="card"><h3>Audio settings</h3>
+    <p class="small muted">Russian voices found on this device: ${TTS.ru.length}</p>
+    <label class="small">Voice</label><select id="voiceSel">${voiceOpts}</select>
+    <label class="small">Slow speed: <b id="slowVal">${rs.slow.toFixed(2)}</b></label><input type="range" id="slowRng" min="0.4" max="0.9" step="0.05" value="${rs.slow}">
+    <label class="small">Normal speed: <b id="normVal">${rs.normal.toFixed(2)}</b></label><input type="range" id="normRng" min="0.6" max="1.2" step="0.05" value="${rs.normal}">
+    <div class="row"><button class="btn" data-act="testvoice">🔊 Test voice</button></div></div>
+  <div class="card"><h3>Back up / move your progress</h3>
+    <p class="small muted">Progress lives in this browser only. Copy the text to keep a backup or move it to another device.</p>
+    <textarea id="xfer" rows="4" placeholder="Export fills this box. Paste saved progress here to import."></textarea>
+    <div class="row"><button class="btn sm" data-act="export">Export</button><button class="btn sm" data-act="import">Import</button></div>
+    <p class="small" id="xmsg"></p>
+    <hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
+    <button class="btn warn block" data-act="reset">Reset all progress</button></div>`;
+}
+
+/* =====================================================================
+   EVENTS
+   ===================================================================== */
+const ACT={
+  nav:el=>{go(el.dataset.v);},
+  day:el=>{S.day=+el.dataset.v;S.followToday=false;save();render();},
+  today:()=>{S.followToday=true;save();render();},
+  nextday:()=>{const d=Math.min(7,currentDay()+1);S.day=d;S.followToday=false;save();render();},
+  start:el=>{const day=currentDay();const i=+el.dataset.i;const def=DAYS[sess&&view==='session'?sess.dayNo:day].sessions[i];startSession(def,sess&&view==='session'?sess.dayNo:day,i);},
+  quick:()=>{startSession({name:'Quick review',kind:'review',filter:null,size:8},currentDay(),0);},
+  begin:()=>{advance();},
+  next:()=>{advance();},
+  play:el=>{speakItem(el.dataset.id,'normal');},
+  slow:el=>{speakItem(el.dataset.id,'slow');},
+  part:el=>{speakPart(el.dataset.id,el.dataset.w,!!el.dataset.slow);},
+  answer:el=>{answerQuiz(el.dataset.k);},
+  hints:()=>{cur().ui.hints=true;render();},
+  reveal:()=>{const s=cur();s.ui.revealed=true;render();speakItem(s.id,'normal');},
+  rate:el=>{rate(el.dataset.ok==='1');},
+  stage:()=>{const s=cur();s.ui.stage++;render();if(s.ui.stage===1)speakItem(s.id,'normal');},
+  mic:()=>{startMic();},
+  repeat:()=>{startSession(sess.def,sess.dayNo,sess.idx);},
+  testvoice:()=>{speakText('Привет! Это русский голос.',false);},
+  recheck:()=>{TTS.polls=0;TTS.refresh();render();},
+  tile:el=>{speakItem(el.dataset.id,'normal');},
+  tileany:el=>{speakItem(el.dataset.id,'normal');},
+  listenany:()=>{startListen();},
+  lpause:()=>{
+    if(LS.playing){LS.playing=false;clearTimeout(LS.timer);TTS.stop();render();}
+    else{LS.playing=true;LS.end=false;if(LS.i>=LS.list.length)LS.i=0;render();listenSpeak();}
+  },
+  lnext:()=>{clearTimeout(LS.timer);LS.i=Math.min(LS.list.length-1,LS.i+1);LS.end=false;render();listenSpeak();},
+  lprev:()=>{clearTimeout(LS.timer);LS.i=Math.max(0,LS.i-1);LS.end=false;render();listenSpeak();},
+  lreplay:()=>{listenSpeak();},
+  lslow:()=>{LS.slowOnly=!LS.slowOnly;render();},
+  lfilter:el=>{const was=LS.playing;clearTimeout(LS.timer);TTS.stop();LS.filter=el.dataset.v;LS.list=buildListenList(LS.filter);LS.i=0;LS.end=false;LS.playing=was;render();if(was)listenSpeak();},
+  export:()=>{document.getElementById('xfer').value=JSON.stringify(S);document.getElementById('xmsg').textContent='Copy this text and keep it somewhere safe.';},
+  import:()=>{
+    const msg=document.getElementById('xmsg');
+    try{
+      const o=JSON.parse(document.getElementById('xfer').value);
+      if(!o||o.v!==1||typeof o.items!=='object')throw new Error('bad');
+      if(!confirm('Replace your current progress with the pasted progress?'))return;
+      S=Object.assign(defaults(),o,{settings:Object.assign(defaults().settings,o.settings||{})});save();TTS.refresh();render();
+      document.getElementById('xmsg').textContent='Imported!';
+    }catch(e){msg.textContent='That doesn’t look like saved progress. Nothing was changed.';}
+  },
+  reset:()=>{
+    if(confirm('Reset ALL progress and start the course again from Day 1? This cannot be undone.')){
+      S=defaults();save();TTS.stop();sess=null;LS=null;go('home');
+    }
+  }
+};
+document.addEventListener('click',ev=>{
+  const sm=ev.target.closest('#banner summary');if(sm){bannerOpen=!document.getElementById('banner').open;return;}
+  const el=ev.target.closest('[data-act]');
+  if(!el||el.disabled)return;
+  const f=ACT[el.dataset.act];
+  if(f)f(el);
+});
+document.addEventListener('input',ev=>{
+  const t=ev.target;
+  if(t.id==='slowRng'){S.settings.slow=+t.value;document.getElementById('slowVal').textContent=(+t.value).toFixed(2);save();}
+  else if(t.id==='normRng'){S.settings.normal=+t.value;document.getElementById('normVal').textContent=(+t.value).toFixed(2);save();}
+});
+document.addEventListener('change',ev=>{
+  if(ev.target.id==='voiceSel'){S.settings.voice=ev.target.value;save();TTS.refresh();}
+});
+
+/* ---------- boot ---------- */
+TTS.init();
+render();
+
+// small hook for automated tests
+window.RT={ITEMS,DAYS,ORDER,LETTERS,get S(){return S;},set S(v){S=v;},grade,buildSession,pickDue,makeOptions,startSession,currentDay,calendarDay,stats,TTS,cfg,sim,bestMatch,norm,buildListenList,HOURS,save,load,go,render,get sess(){return sess;},get LS(){return LS;},get view(){return view;}};
+})();
+</script>
+</body>
+</html>
