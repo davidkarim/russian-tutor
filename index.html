@@ -403,6 +403,10 @@ function buildSession(def,now){
       if(phase==='circle')counts.circle++; else if(phase==='practice')counts.practice++;
       steps=steps.concat(reviewStepsFor(id,phase,now));
     });
+  } else if(def.kind==='vocab'){            // replay-only: intro cards, no grading, no progress writes
+    def.ids.forEach(id=>steps.push({type:'intro',id,phase:'replay'}));
+    steps.unshift({type:'summary',phase:'info',counts,vocab:true});
+    return {steps,counts};
   } else if(def.kind==='learn'){
     const newIds=def.new;
     const circle=pickDue(now,6,new Set(newIds));
@@ -532,7 +536,7 @@ function homeHTML(){
     return `<div class="sess"><div class="t"><b>${esc(s.name)}</b><span>${esc(sub)}${done?' · done ×'+done:''}</span></div>
       <button class="btn primary" data-act="start" data-i="${i}">${done?'Again':'Start'}</button></div>`;
   }).join('');
-  const need=st.needing.length;
+  const need=st.needing.length,vids=dayVocabIds(day);
   return `<div class="card">
     <h1>Day ${day} of 7 ${day===cal?'<span class="badge">today</span>':''}</h1>
     <div class="days" role="group" aria-label="Day selector">${chips}</div>
@@ -542,7 +546,8 @@ function homeHTML(){
     </div>
     <p class="muted small">${S.followToday?'Following the calendar: one day per day.':'You picked this day yourself. “Jump to today” goes back to the calendar day.'}</p>
   </div>
-  <div class="card"><h2>${esc(d.title)}</h2><p class="muted">${esc(d.blurb)}</p>${sess}</div>
+  <div class="card"><h2>${esc(d.title)}</h2><p class="muted">${esc(d.blurb)}</p>
+    ${vids.length?`<button class="btn soft block" style="margin-bottom:10px" data-act="vocab" data-v="${day}">📖 Replay Day ${day} vocabulary (example words)</button>`:''}${sess}</div>
   <div class="card">
     <h3>Your progress</h3>
     <div class="stat"><span>Letters met</span><b>${st.lettersMet} / 33</b></div>
@@ -573,7 +578,7 @@ function progressBar(){
   return `<div class="bar"><i style="width:${pct}%"></i></div>`;
 }
 function phaseBadge(p){
-  return p==='circle'?'<span class="badge circle">Circling back</span>':p==='new'?'<span class="badge new">New</span>':p==='again'?'<span class="badge circle">One more try</span>':'<span class="badge">Practice</span>';
+  return p==='replay'?'<span class="badge">Replay</span>':p==='circle'?'<span class="badge circle">Circling back</span>':p==='new'?'<span class="badge new">New</span>':p==='again'?'<span class="badge circle">One more try</span>':'<span class="badge">Practice</span>';
 }
 const CHEER_OK=['Yes! Nice ear.','Exactly right!','You got it!','Lovely, that’s it!','Spot on!'];
 const CHEER_BAD=['Almost! These are tricky, and it will come back around.','No worries, everyone mixes these up at first.','Good try! Now you know it. We’ll revisit it.','Close one. Listen to it once more and it will stick.'];
@@ -595,7 +600,16 @@ function playButtons(id,extra){
   return `<div class="playrow"><button class="btn primary big" data-act="play" data-id="${esc(id)}" aria-label="Play">▶ Play</button>
   <button class="btn soft slow" data-act="slow" data-id="${esc(id)}" aria-label="Play slowly">🐢 Slow</button></div>${extra||''}`;
 }
+function dayVocabIds(day){
+  const ids=[];
+  (DAYS[day]?DAYS[day].sessions:[]).forEach(s=>{if(s.kind==='learn')s.new.forEach(id=>{if(ITEMS[id]&&kindOf(id)==='letter'&&!ids.includes(id))ids.push(id);});});
+  return ids;
+}
 function summaryHTML(s){
+  if(s.vocab)return `<div class="card center"><h2>${esc(sess.def.name)}</h2>
+  <p>🔁 Replay the example words for ${sess.def.ids.length} letter${sess.def.ids.length>1?'s':''}: ${esc(sess.def.ids.map(id=>ITEMS[id].U).join(' '))}</p>
+  <p class="muted small">Just listening and looking. This doesn’t change your progress. Turn your sound on.</p>
+  <button class="btn primary block" data-act="begin">Let’s go →</button></div>`;
   const c=s.counts;
   const parts=[];
   if(c.circle)parts.push(`<p>👋 First we’ll <b>circle back</b> to ${c.circle} item${c.circle>1?'s':''} you met before (the tricky or due ones).</p>`);
@@ -696,7 +710,10 @@ function phraseHTML(s){
 function doneHTML(){
   const pct=sess.total?Math.round(100*sess.correct/sess.total):100;
   const msg=pct>=80?'Wonderful work! 🎉':pct>=50?'Good progress! Anything tricky will come back around. 🌱':'Great that you showed up! Everything tricky will return in your next session, and that’s how it sticks. 💪';
-  const day=sess.dayNo,d=DAYS[day],nextIdx=sess.idx+1<d.sessions.length?sess.idx+1:-1;
+  const day=sess.dayNo,d=DAYS[day];
+  if(sess.def.kind==='vocab')return `<div class="card center"><h2>Words replayed 🎧</h2><p class="muted">Come back to these any time.</p>
+  <div class="row"><button class="btn" data-act="repeat">🔁 Replay again</button><button class="btn primary" data-act="nav" data-v="home">Back to Day ${day}</button></div></div>`;
+  const nextIdx=sess.idx+1<d.sessions.length?sess.idx+1:-1;
   return `<div class="card center"><h2>Session complete</h2><p style="font-size:20px">${msg}</p>
   ${sess.total?`<p class="muted">${sess.correct} of ${sess.total} right first time.</p>`:''}
   <div class="row"><button class="btn" data-act="repeat">🔁 Repeat this session</button>
@@ -707,7 +724,7 @@ function doneHTML(){
 /* ---------- session actions ---------- */
 function autoplay(){
   const s=cur();if(!s)return;
-  if(s.type==='intro'){touch(s.id);speakItem(s.id,'normal');}
+  if(s.type==='intro'){if(sess.def.kind!=='vocab')touch(s.id);speakItem(s.id,'normal');}
   else if(s.type==='quiz'&&s.qtype==='s2l'){speakPart(s.id,'snd',false);}
   else if(s.type==='phrase'){
     if(s.ui&&s.ui.stage===0)speakItem(s.id,'slow');
@@ -717,11 +734,11 @@ function autoplay(){
 function advance(){
   sess.i++;
   if(sess.i>=sess.steps.length){
-    const k=sess.dayNo+':'+sess.idx;S.done[k]=(S.done[k]||0)+1;save();
+    if(sess.def.kind!=='vocab'){const k=sess.dayNo+':'+sess.idx;S.done[k]=(S.done[k]||0)+1;save();}
     sess.steps.push({type:'done'});sess.i=sess.steps.length-1;
   }
   const s=cur();
-  if(s&&s.type==='intro')touch(s.id);
+  if(s&&s.type==='intro'&&sess.def.kind!=='vocab')touch(s.id);
   render();window.scrollTo(0,0);
   autoplay();
 }
@@ -887,6 +904,7 @@ const ACT={
   nextday:()=>{const d=Math.min(7,currentDay()+1);S.day=d;S.followToday=false;save();render();},
   start:el=>{const day=currentDay();const i=+el.dataset.i;const def=DAYS[sess&&view==='session'?sess.dayNo:day].sessions[i];startSession(def,sess&&view==='session'?sess.dayNo:day,i);},
   quick:()=>{startSession({name:'Quick review',kind:'review',filter:null,size:8},currentDay(),0);},
+  vocab:el=>{const day=+el.dataset.v||currentDay();const ids=dayVocabIds(day);if(ids.length)startSession({name:'Day '+day+' vocabulary',kind:'vocab',ids},day,-1);},
   begin:()=>{advance();},
   next:()=>{advance();},
   play:el=>{speakItem(el.dataset.id,'normal');},
